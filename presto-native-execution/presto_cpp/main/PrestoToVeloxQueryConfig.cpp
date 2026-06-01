@@ -182,9 +182,6 @@ void updateFromSystemConfigs(
        .veloxConfig =
            velox::core::QueryConfig::kHashProbeBloomFilterPushdownMaxSize},
 
-      {.prestoSystemConfig = std::string(SystemConfig::kUseLegacyArrayAgg),
-       .veloxConfig = velox::core::QueryConfig::kPrestoArrayAggIgnoreNulls},
-
       {.prestoSystemConfig = std::string{SystemConfig::kTaskWriterCount},
        .veloxConfig = velox::core::QueryConfig::kTaskWriterCount},
 

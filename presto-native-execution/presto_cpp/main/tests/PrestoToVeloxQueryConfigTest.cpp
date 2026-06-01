@@ -223,18 +223,6 @@ TEST_F(PrestoToVeloxQueryConfigTest, sessionPropertiesOverrideSystemConfigs) {
                  config.maxLocalExchangePartitionBufferSize());
            }},
 
-      {.veloxConfigKey = core::QueryConfig::kPrestoArrayAggIgnoreNulls,
-       .sessionPropertyKey = std::nullopt,
-       .systemConfigKey = std::string(SystemConfig::kUseLegacyArrayAgg),
-       .sessionValue = "",
-       .differentSessionValue = "",
-       .validator =
-           [](const core::QueryConfig& config,
-              const std::string& expectedValue) {
-             EXPECT_EQ(
-                 expectedValue == "true", config.prestoArrayAggIgnoreNulls());
-           }},
-
       {.veloxConfigKey = core::QueryConfig::kMaxOutputBufferSize,
        .sessionPropertyKey = std::make_optional<std::string>(
            SessionProperties::kMaxOutputBufferSize),

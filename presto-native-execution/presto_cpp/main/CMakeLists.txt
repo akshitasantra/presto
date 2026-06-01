@@ -153,9 +153,11 @@ endif()
 target_link_libraries(presto_server presto_server_lib velox_tpch_connector velox_tpcds_connector)
 
 # Clang requires explicit linking with libatomic.
+# On macOS, atomic support is built-in and doesn't require a separate library.
 if(
   "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang"
   AND "${CMAKE_CXX_COMPILER_VERSION}" VERSION_GREATER_EQUAL 15
+  AND NOT APPLE
 )
   target_link_libraries(presto_server atomic)
 endif()

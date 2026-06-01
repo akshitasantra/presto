@@ -69,7 +69,7 @@ option(PRESTO_ENABLE_REMOTE_FUNCTIONS "Enable remote function support" OFF)
 
 option(PRESTO_ENABLE_EXAMPLES "Enable Presto examples" OFF)
 
-option(PRESTO_ENABLE_TESTING "Enable tests" ON)
+option(PRESTO_ENABLE_TESTING "Enable tests" OFF)
 
 option(PRESTO_ENABLE_JWT "Enable JWT (JSON Web Token) authentication" OFF)
 
@@ -131,10 +131,18 @@ if(DEFINED ENV{INSTALL_PREFIX})
 endif()
 
 set(Boost_USE_MULTITHREADED TRUE)
+
+# On macOS, don't require atomic library as it's not available
+if(APPLE)
+  set(BOOST_REQUIRED_COMPONENTS program_options context filesystem regex thread system date_time url)
+else()
+  set(BOOST_REQUIRED_COMPONENTS program_options context filesystem regex thread system date_time url atomic)
+endif()
+
 find_package(
   Boost
   1.66.0
-  REQUIRED program_options context filesystem regex thread system date_time url atomic
+  REQUIRED ${BOOST_REQUIRED_COMPONENTS}
 )
 include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 

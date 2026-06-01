@@ -45,7 +45,7 @@ function install_gperf {
   wget_and_untar https://mirrors.ocf.berkeley.edu/gnu/gperf/gperf-${GPERF_VERSION}.tar.gz gperf
   (
     cd ${DEPENDENCY_DIR}/gperf || exit &&
-      ./configure --prefix=${INSTALL_PREFIX} &&
+      ./configure --prefix=${INSTALL_PREFIX} CXXFLAGS="-Wno-register" &&
       make install
   )
 }
@@ -56,7 +56,7 @@ function install_datasketches {
 }
 
 function install_presto_deps {
-  run_and_time install_presto_deps_from_brew
+  # run_and_time install_presto_deps_from_brew
   run_and_time install_gperf
   run_and_time install_proxygen
   run_and_time install_datasketches
@@ -76,7 +76,7 @@ else
   else
     echo "Skipping installation of build dependencies since INSTALL_PREREQUISITES is not set"
   fi
-  install_velox_deps
+  # install_velox_deps
   install_presto_deps
   echo "All dependencies for Prestissimo installed!"
   echo "To reuse the installed dependencies for subsequent builds, consider adding this to your ~/.zshrc"
